@@ -1,0 +1,70 @@
+resources:
+- name: runtime-og-ci
+  type: git
+  source:
+    uri: git@github.com:/cloudfoundry/runtime-og-ci.git
+    branch: master
+
+- name: app-autoscaler
+  type: git
+  source:
+    uri: git@github.com:/cloudfoundry-incubator/app-autoscaler.git
+    branch: develop
+    private_key: {{autoscaler_key}}
+
+- name: tracker
+  type: tracker
+  source:
+    tracker_url: https://www.pivotaltracker.com
+    project_id: "1566795"
+    token: {{tracker_api_token}}
+
+- name: cf-release
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry/cf-release
+    branch: master
+
+jobs:
+- name: unit-tests
+  max_in_flight: 2
+  plan:
+  - aggregate:
+    - get: app-autoscaler
+      trigger: true
+    - get: runtime-og-ci
+  - task: unit
+    file: runtime-og-ci/app-autoscaler/tasks/autoscaler-unit-tests.yml
+  - put: tracker
+    params:
+      repos:
+        - app-autoscaler
+
+- name: integration
+  max_in_flight: 1
+  plan:
+  - aggregate:
+    - get: app-autoscaler
+      trigger: true
+      passed: [unit-tests]
+    - get: runtime-og-ci
+    - get: cf-release
+      params:
+        submodules: none
+  - task: deploy-cf-release
+    file: runtime-og-ci/app-autoscaler/tasks/deploy-cf-release.yml
+    params:
+      BOSH_TARGET: {{bosh-target}}
+      BOSH_USERNAME: {{bosh-username}}
+      BOSH_PASSWORD: {{bosh-password}}
+  - task: build-autoscaler
+    file: runtime-og-ci/app-autoscaler/tasks/build-autoscaler.yml
+    params:
+      BOSH_LITE_IP: {{bosh-lite-ip}}
+  - task: acceptance
+    file: runtime-og-ci/app-autoscaler/tasks/autoscaler-acceptance.yml
+    privileged: true
+    params:
+      BOSH_LITE_IP: {{bosh-lite-ip}}
+  # - task: acceptance
+  #   file: runtime-og-ci/app-autoscaler/tasks/autoscaler-acceptance.yml
