@@ -11,4 +11,4 @@ inputs:
 - name: autoscaler-output
 
 run:
-  path: runtime-og-ci/app-autoscaler/scripts/autoscaler-acceptance.sh
+  path: runtime-og-ci/autoscaler/scripts/autoscaler-acceptance.sh

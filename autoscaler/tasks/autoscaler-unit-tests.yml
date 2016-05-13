@@ -10,4 +10,4 @@ inputs:
 - name: runtime-og-ci
 
 run:
-  path: runtime-og-ci/app-autoscaler/scripts/autoscaler-unit-tests.sh
+  path: runtime-og-ci/autoscaler/scripts/autoscaler-unit-tests.sh

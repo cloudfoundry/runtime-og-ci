@@ -13,4 +13,4 @@ outputs:
 - name: autoscaler-output
 
 run:
-  path: runtime-og-ci/app-autoscaler/scripts/build-autoscaler.sh
+  path: runtime-og-ci/autoscaler/scripts/build-autoscaler.sh

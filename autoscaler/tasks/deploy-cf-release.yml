@@ -10,4 +10,4 @@ inputs:
 - name: cf-release
 
 run:
-  path: runtime-og-ci/app-autoscaler/scripts/deploy-cf-release.sh
+  path: runtime-og-ci/autoscaler/scripts/deploy-cf-release.sh
