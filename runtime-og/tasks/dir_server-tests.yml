@@ -10,4 +10,4 @@ inputs:
 - name: runtime-og-ci
 
 run:
-  path: runtime-og-ci/scripts/dir_server-tests.sh
+  path: runtime-og-ci/runtime-og/scripts/dir_server-tests.sh

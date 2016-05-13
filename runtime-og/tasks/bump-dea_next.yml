@@ -13,7 +13,7 @@ outputs:
 - name: bumped
 
 run:
-  path: runtime-og-ci/scripts/bump-dea-hm-workspace.sh
+  path: runtime-og-ci/runtime-og/scripts/bump-dea-hm-workspace.sh
   args:
   - dea_next
   - dea_next

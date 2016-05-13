@@ -14,4 +14,4 @@ outputs:
 - name: assets
 
 run:
-  path: runtime-og-ci/scripts/create-cf-release.sh
+  path: runtime-og-ci/runtime-og/scripts/create-cf-release.sh

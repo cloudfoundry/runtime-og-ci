@@ -12,4 +12,4 @@ inputs:
 - name: dea-hm-workspace
 
 run:
-  path: runtime-og-ci/scripts/dea-integration-tests.sh
+  path: runtime-og-ci/runtime-og/scripts/dea-integration-tests.sh

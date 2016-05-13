@@ -9,4 +9,4 @@ inputs:
 - name: runtime-og-ci
 
 run:
-  path: runtime-og-ci/scripts/cats.sh    
+  path: runtime-og-ci/runtime-og/scripts/cats.sh

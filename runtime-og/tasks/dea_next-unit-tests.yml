@@ -10,4 +10,4 @@ inputs:
 - name: runtime-og-ci
 
 run:
-  path: runtime-og-ci/scripts/dea-unit-tests.sh
+  path: runtime-og-ci/runtime-og/scripts/dea-unit-tests.sh

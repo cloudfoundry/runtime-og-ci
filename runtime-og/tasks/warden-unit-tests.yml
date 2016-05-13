@@ -11,4 +11,4 @@ inputs:
 - name: rootfs
 
 run:
-  path: runtime-og-ci/scripts/warden-unit-tests.sh
+  path: runtime-og-ci/runtime-og/scripts/warden-unit-tests.sh

@@ -38,7 +38,7 @@ pushd cf-release
   done
 
   bosh create release --force --name cf --with-tarball --version $VERSION
-  scripts/generate-bosh-lite-dev-manifest ../runtime-og-ci/stubs/bosh-lite.yml
+  scripts/generate-bosh-lite-dev-manifest ../runtime-og-ci/runtime-og/stubs/bosh-lite.yml
 popd
 
 ls -l cf-release/dev_releases/cf/cf-*.tgz

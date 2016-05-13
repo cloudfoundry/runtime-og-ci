@@ -11,4 +11,4 @@ inputs:
 - name: runtime-og-ci
 
 run:
-  path: runtime-og-ci/scripts/hm9000-unit-integration-tests.sh
+  path: runtime-og-ci/runtime-og/scripts/hm9000-unit-integration-tests.sh
