@@ -2,7 +2,7 @@
 set -x
 
 source ~/.bashrc
-source runtime-og-ci/scripts/warden-setup.sh
+source runtime-og-ci/runtime-og/scripts/warden-setup.sh
 
 trap_add() {
     trap_add_cmd=$1; shift || fatal "${FUNCNAME} usage error"
