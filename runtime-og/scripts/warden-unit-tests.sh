@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 
-source runtime-og-ci/scripts/warden-setup.sh
+source runtime-og-ci/runtime-og/scripts/warden-setup.sh
 
 setup_warden_infrastructure
 
