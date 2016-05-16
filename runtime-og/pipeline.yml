@@ -15,7 +15,8 @@ resources:
 - name: runtime-og-ci
   type: git
   source:
-    uri: git@github.com:/cloudfoundry/runtime-og-ci.git
+    uri: https://github.com/cloudfoundry/runtime-og-ci
+    branch: master
 
 - name: warden
   type: git
@@ -76,9 +77,9 @@ jobs:
     - get: runtime-og-ci
   - task: unit
     privileged: true
-    file: runtime-og-ci/tasks/warden-unit-tests.yml
+    file: runtime-og-ci/runtime-og/tasks/warden-unit-tests.yml
   - task: bump-dea-hm-workspace
-    file: runtime-og-ci/tasks/bump-warden.yml
+    file: runtime-og-ci/runtime-og/tasks/bump-warden.yml
   - put: dea-hm-workspace
     params:
       repository: bumped/dea-hm-workspace
@@ -105,14 +106,14 @@ jobs:
     - get: runtime-og-ci
   - aggregate:
     - task: dir_server
-      file: runtime-og-ci/tasks/dir_server-tests.yml
+      file: runtime-og-ci/runtime-og/tasks/dir_server-tests.yml
     - task: unit
-      file: runtime-og-ci/tasks/dea_next-unit-tests.yml
+      file: runtime-og-ci/runtime-og/tasks/dea_next-unit-tests.yml
     - task: integration
       privileged: true
-      file: runtime-og-ci/tasks/dea_next-integration-tests.yml
+      file: runtime-og-ci/runtime-og/tasks/dea_next-integration-tests.yml
   - task: bump-dea-hm-workspace
-    file: runtime-og-ci/tasks/bump-dea_next.yml
+    file: runtime-og-ci/runtime-og/tasks/bump-dea_next.yml
   - put: dea-hm-workspace
     params:
       repository: bumped/dea-hm-workspace
@@ -134,9 +135,9 @@ jobs:
       trigger: true
     - get: runtime-og-ci
   - task: unit
-    file: runtime-og-ci/tasks/hm9000-unit-integration-tests.yml
+    file: runtime-og-ci/runtime-og/tasks/hm9000-unit-integration-tests.yml
   - task: bump-dea-hm-workspace
-    file: runtime-og-ci/tasks/bump-hm9000.yml
+    file: runtime-og-ci/runtime-og/tasks/bump-hm9000.yml
   - put: dea-hm-workspace
     params:
       repository: bumped/dea-hm-workspace
@@ -157,7 +158,7 @@ jobs:
     - get: cf-release
     - get: stemcell
   - task: create-release
-    file: runtime-og-ci/tasks/create-cf-release.yml # has some softlayer hacks
+    file: runtime-og-ci/runtime-og/tasks/create-cf-release.yml # has some softlayer hacks
     params:
       BOSH_TARGET: {{bosh-target}}
       BOSH_USERNAME: {{bosh-username}}
@@ -180,7 +181,7 @@ jobs:
       submodules: none
     - get: runtime-og-ci
   - task: run-cats
-    file: runtime-og-ci/tasks/cats.yml
+    file: runtime-og-ci/runtime-og/tasks/cats.yml
     params:
       BOSH_TARGET: {{bosh-target}}
       BOSH_USERNAME: {{bosh-username}}
