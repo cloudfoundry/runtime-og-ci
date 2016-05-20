@@ -38,19 +38,19 @@ RUN curl https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.5.0 | tar
           make install
 
 # Install Ruby
-RUN ruby-install ruby 2.3.0 -- --disable-install-rdoc
+RUN ruby-install ruby 2.3.1 -- --disable-install-rdoc
 
 # Add ruby to PATH
-ENV PATH $PATH:/home/root/.gem/ruby/2.3.0/bin:/opt/rubies/ruby-2.3.0/lib/ruby/gems/2.3.0/bin:/opt/rubies/ruby-2.3.0/bin
+ENV PATH $PATH:/home/root/.gem/ruby/2.3.1/bin:/opt/rubies/ruby-2.3.1/lib/ruby/gems/2.3.0/bin:/opt/rubies/ruby-2.3.1/bin
 
 # Set permissions on ruby directory
 RUN chmod -R 777 /opt/rubies/
 
 # Install bundler
-RUN /opt/rubies/ruby-2.3.0/bin/gem install bundler -v '1.11.2' --no-rdoc --no-ri
+RUN /opt/rubies/ruby-2.3.1/bin/gem install bundler -v '1.12.4' --no-rdoc --no-ri
 
 # Install bosh_cli
-RUN /opt/rubies/ruby-2.3.0/bin/gem install bosh_cli --no-rdoc --no-ri
+RUN /opt/rubies/ruby-2.3.1/bin/gem install bosh_cli --no-rdoc --no-ri
 
 # Install jq as a nice to have on container debugging
 RUN wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && \
