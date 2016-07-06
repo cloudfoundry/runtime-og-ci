@@ -3,7 +3,7 @@ resources:
   type: git
   source:
     uri: https://github.com/cloudfoundry/runtime-og-ci.git
-    branch: master
+    branch: autoscaler
 
 - name: app-autoscaler
   type: git
@@ -40,31 +40,3 @@ jobs:
       repos:
         - app-autoscaler
 
-- name: integration
-  max_in_flight: 1
-  plan:
-  - aggregate:
-    - get: app-autoscaler
-      trigger: true
-      passed: [unit-tests]
-    - get: runtime-og-ci
-    - get: cf-release
-      params:
-        submodules: none
-  - task: deploy-cf-release
-    file: runtime-og-ci/autoscaler/tasks/deploy-cf-release.yml
-    params:
-      BOSH_TARGET: {{bosh-target}}
-      BOSH_USERNAME: {{bosh-username}}
-      BOSH_PASSWORD: {{bosh-password}}
-  - task: build-autoscaler
-    file: runtime-og-ci/autoscaler/tasks/build-autoscaler.yml
-    params:
-      BOSH_LITE_IP: {{bosh-lite-ip}}
-  - task: acceptance
-    file: runtime-og-ci/autoscaler/tasks/autoscaler-acceptance.yml
-    privileged: true
-    params:
-      BOSH_LITE_IP: {{bosh-lite-ip}}
-  # - task: acceptance
-  #   file: runtime-og-ci/app-autoscaler/tasks/autoscaler-acceptance.yml
