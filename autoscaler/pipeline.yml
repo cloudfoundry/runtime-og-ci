@@ -3,7 +3,7 @@ resources:
   type: git
   source:
     uri: https://github.com/cloudfoundry/runtime-og-ci.git
-    branch: autoscaler
+    branch: master
 
 - name: app-autoscaler
   type: git
