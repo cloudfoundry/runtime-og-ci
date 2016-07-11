@@ -1,7 +1,10 @@
 #!/bin/bash
 set -x
+set -e
 
 service postgresql start
+psql postgres://postgres@127.0.0.1:5432 -c 'DROP DATABASE IF EXISTS autoscaler'
+psql postgres://postgres@127.0.0.1:5432 -c 'CREATE DATABASE autoscaler'
 
 cd app-autoscaler
 
