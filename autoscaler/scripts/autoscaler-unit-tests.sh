@@ -8,10 +8,12 @@ psql postgres://postgres@127.0.0.1:5432 -c 'CREATE DATABASE autoscaler'
 
 cd app-autoscaler
 
-mvn package
-java -cp 'db/target/lib/*'  liquibase.integration.commandline.Main --username=postgres --changeLogFile=api/db/api.db.changelog.yml --url jdbc:postgresql://127.0.0.1/autoscaler --driver=org.postgresql.Driver update
-java -cp 'db/target/lib/*'  liquibase.integration.commandline.Main --username=postgres --changeLogFile=servicebroker/db/servicebroker.db.changelog.yml --url jdbc:postgresql://127.0.0.1/autoscaler --driver=org.postgresql.Driver update
+POSTGRES_OPTS=--username=postgres --url jdbc:postgresql://127.0.0.1/autoscaler --driver=org.postgresql.Driver
 
+mvn package
+java -cp 'db/target/lib/*' liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=api/db/api.db.changelog.yml update
+java -cp 'db/target/lib/*' liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=servicebroker/db/servicebroker.db.changelog.json update
+java -cp 'db/target/lib/*' liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=src/metricscollector/db/metricscollector.db.changelog.yml update
 npm set progress=false
 
 pushd api
@@ -29,5 +31,5 @@ export PATH=$GOPATH/bin:$PATH
 go install github.com/onsi/ginkgo/ginkgo
 
 pushd src/metricscollector
-ginkgo -r -race
+DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race
 popd
