@@ -14,6 +14,9 @@ mvn package
 java -cp 'db/target/lib/*' liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=api/db/api.db.changelog.yml update
 java -cp 'db/target/lib/*' liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=servicebroker/db/servicebroker.db.changelog.json update
 java -cp 'db/target/lib/*' liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=src/metricscollector/db/metricscollector.db.changelog.yml update
+java -cp 'db/target/lib/*'  liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=scheduler/db/scheduler.changelog-master.yaml update
+java -cp 'db/target/lib/*'  liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=scheduler/db/quartz.changelog-master.yaml updateupdate
+
 npm set progress=false
 
 pushd api
@@ -31,5 +34,9 @@ export PATH=$GOPATH/bin:$PATH
 go install github.com/onsi/ginkgo/ginkgo
 
 pushd src/metricscollector
-DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race
+DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -randomizeAllSpecs
+popd
+
+pushd scheduler
+mvn test
 popd
