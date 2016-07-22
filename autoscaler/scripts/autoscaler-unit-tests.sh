@@ -15,7 +15,7 @@ java -cp 'db/target/lib/*' liquibase.integration.commandline.Main $POSTGRES_OPTS
 java -cp 'db/target/lib/*' liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=servicebroker/db/servicebroker.db.changelog.json update
 java -cp 'db/target/lib/*' liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=src/metricscollector/db/metricscollector.db.changelog.yml update
 java -cp 'db/target/lib/*'  liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=scheduler/db/scheduler.changelog-master.yaml update
-java -cp 'db/target/lib/*'  liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=scheduler/db/quartz.changelog-master.yaml updateupdate
+java -cp 'db/target/lib/*'  liquibase.integration.commandline.Main $POSTGRES_OPTS --changeLogFile=scheduler/db/quartz.changelog-master.yaml update
 
 npm set progress=false
 
