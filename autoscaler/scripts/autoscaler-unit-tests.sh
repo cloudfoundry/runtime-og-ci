@@ -36,6 +36,9 @@ go install github.com/onsi/ginkgo/ginkgo
 pushd src/metricscollector
 DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -randomizeAllSpecs
 popd
+pushd src/cf
+DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -randomizeAllSpecs
+popd
 
 pushd scheduler
 mvn test
