@@ -39,6 +39,9 @@ popd
 pushd src/cf
 DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -randomizeAllSpecs
 popd
+pushd src/db
+DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -randomizeAllSpecs
+popd
 pushd src/dataaggregator
 DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -randomizeAllSpecs
 popd
