@@ -35,12 +35,7 @@ export GOPATH=$PWD
 export PATH=$GOPATH/bin:$PATH
 go install github.com/onsi/ginkgo/ginkgo
 
-for f in cf db models metricscollector eventgenerator scalingengine
-do
-  pushd src/$f
-  DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -randomizeAllSpecs
-  popd
-done
+DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -randomizeAllSpecs src/autoscaler
 
 pushd scheduler
 mvn test
