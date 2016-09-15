@@ -30,8 +30,8 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 ENV GOPATH $HOME/go
 ENV PATH $HOME/go/bin:/usr/local/go/bin:$PATH
 RUN \
-  wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz -P /tmp && \
-  tar xzvf /tmp/go1.6.2.linux-amd64.tar.gz -C /usr/local && \
+  wget https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz -P /tmp && \
+  tar xzvf /tmp/go1.7.1.linux-amd64.tar.gz -C /usr/local && \
   mkdir $GOPATH && \
   rm -rf /tmp/*
 
@@ -44,7 +44,7 @@ ENV LANG en_US.utf8
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
 ENV PG_MAJOR 9.4
-ENV PG_VERSION 9.4.8-1.pgdg80+1
+ENV PG_VERSION 9.4.9-1.pgdg80+1
 
 RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main' $PG_MAJOR > /etc/apt/sources.list.d/pgdg.list
 
