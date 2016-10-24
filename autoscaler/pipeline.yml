@@ -27,7 +27,7 @@ resources:
 
 jobs:
 - name: unit-tests
-  max_in_flight: 2
+  max_in_flight: 1
   plan:
   - aggregate:
     - get: app-autoscaler
@@ -39,4 +39,13 @@ jobs:
     params:
       repos:
         - app-autoscaler
-
+- name: integration-tests
+  max_in_flight: 1
+  plan:
+  - aggregate:
+    - get: app-autoscaler
+      passed: [unit-tests]
+      trigger: true
+    - get: runtime-og-ci
+  - task: integration
+    file: runtime-og-ci/autoscaler/tasks/integration-tests.yml
