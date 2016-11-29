@@ -62,10 +62,10 @@ function setup_warden_infrastructure() {
     if [ $RC != "0" ]; then
       echo "Unable to umount /tmp/warden, reusing existing tmp filesystem"
     else
-      mount -o size=4G,rw -t tmpfs tmpfs /tmp/warden
+      mount -o size=6G,rw -t tmpfs tmpfs /tmp/warden
     fi
   else
-    mount -o size=4G,rw -t tmpfs tmpfs /tmp/warden
+    mount -o size=6G,rw -t tmpfs tmpfs /tmp/warden
   fi
   set -e
 
