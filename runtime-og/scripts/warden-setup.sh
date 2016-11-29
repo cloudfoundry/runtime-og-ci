@@ -69,13 +69,13 @@ function setup_warden_infrastructure() {
   fi
   set -e
 
-  dd if=/dev/zero of=/tmp/warden/rootfs.img bs=1024 count=1048576
+  dd if=/dev/zero of=/tmp/warden/rootfs.img bs=1024 count=1572864
   rootfs_loopdev=$(losetup --show -f /tmp/warden/rootfs.img)
   mkfs -t ext4 -m 1 -v ${rootfs_loopdev}
   mkdir -p /tmp/warden/rootfs
   mount -t ext4 ${rootfs_loopdev} /tmp/warden/rootfs
 
-  dd if=/dev/zero of=/tmp/warden/containers.img bs=1024 count=1048576
+  dd if=/dev/zero of=/tmp/warden/containers.img bs=1024 count=1572864
   containers_loopdev=$(losetup --show -f /tmp/warden/containers.img)
   mkfs -t ext4 -m 1 -v ${containers_loopdev}
   mkdir -p /tmp/warden/containers
