@@ -29,8 +29,7 @@ pushd scheduler
 mvn package -DskipTests
 popd
 
-pushd test/integration/api
-npm install
-npm run integration
-popd
+go install github.com/onsi/ginkgo/ginkgo
+export DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable
+ginkgo -r -race -randomizeAllSpecs src/integration
 
