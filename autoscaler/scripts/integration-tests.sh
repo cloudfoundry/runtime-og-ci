@@ -29,7 +29,9 @@ pushd scheduler
 mvn package -DskipTests
 popd
 
+export GOPATH=$PWD
+export PATH=$GOPATH/bin:$PATH
 go install github.com/onsi/ginkgo/ginkgo
-export DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable
-ginkgo -r -race -randomizeAllSpecs src/integration
+
+DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -randomizeAllSpecs src/integration
 
