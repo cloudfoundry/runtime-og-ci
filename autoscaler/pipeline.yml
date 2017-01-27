@@ -19,12 +19,6 @@ resources:
     project_id: "1566795"
     token: {{tracker_api_token}}
 
-- name: cf-release
-  type: git
-  source:
-    uri: https://github.com/cloudfoundry/cf-release
-    branch: master
-
 jobs:
 - name: unit-tests
   max_in_flight: 1
