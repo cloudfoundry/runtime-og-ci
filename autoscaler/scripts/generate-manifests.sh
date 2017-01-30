@@ -24,6 +24,5 @@ pushd diego-release
   USE_SQL='postgres' ./scripts/generate-bosh-lite-manifests
 popd
 
-mkdir generate-manifest-artifacts
 cp $CF_RELEASE_DIR/bosh-lite/deployments/cf.yml "generate-manifest-artifacts/manifest.yml"
 cp ../diego-release/bosh-lite/deployments/diego.yml "generate-manifest-artifacts/diego.yml"
