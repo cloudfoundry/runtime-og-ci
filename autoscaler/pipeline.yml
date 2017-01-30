@@ -30,10 +30,10 @@ resources:
     branch: master
 
 - name: cf-release-bosh-release
-    type: bosh-io-release
-    tarball: true
-    source:
-      repository: cloudfoundry/cf-release
+  type: bosh-io-release
+  tarball: true
+  source:
+    repository: cloudfoundry/cf-release
 
 - name: diego-release
   type: git
@@ -42,10 +42,10 @@ resources:
     branch: master
 
 - name: diego-bosh-release
-    type: bosh-io-release
-    tarball: true
-    source:
-      repository: cloudfoundry/diego-release
+  type: bosh-io-release
+  tarball: true
+  source:
+    repository: cloudfoundry/diego-release
 
 - name: garden-runc-bosh-release
   type: bosh-io-release
@@ -58,7 +58,7 @@ resources:
   source:
     target: https://{{bosh-lite-ip}}:25555
     username: {{bosh-username}}
-    password: {{bosh=password}}
+    password: {{bosh-password}}
     deployment: cf-warden
     ignore_ssl: true
 
@@ -67,15 +67,15 @@ resources:
   source:
     target: https://{{bosh-lite-ip}}:25555
     username: {{bosh-username}}
-    password: {{bosh=password}}
+    password: {{bosh-password}}
     deployment: cf-warden-diego
     ignore_ssl: true
 
 - name: cflinuxfs2-rootfs-bosh-release
-    type: bosh-io-release
-    tarball: true
-    source:
-      repository: cloudfoundry/cflinuxfs2-rootfs-release
+  type: bosh-io-release
+  tarball: true
+  source:
+    repository: cloudfoundry/cflinuxfs2-rootfs-release
 
 - name: tracker
   type: tracker
