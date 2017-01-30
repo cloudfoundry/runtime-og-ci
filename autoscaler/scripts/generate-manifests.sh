@@ -25,4 +25,4 @@ pushd diego-release
 popd
 
 cp $CF_RELEASE_DIR/bosh-lite/deployments/cf.yml "generate-manifest-artifacts/manifest.yml"
-cp ../diego-release/bosh-lite/deployments/diego.yml "generate-manifest-artifacts/diego.yml"
+cp diego-release/bosh-lite/deployments/diego.yml "generate-manifest-artifacts/diego.yml"
