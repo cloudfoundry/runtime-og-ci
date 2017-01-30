@@ -18,12 +18,12 @@ export PATH=$PWD/bin:$PATH
 
 pushd "${CF_RELEASE_DIR}" > /dev/null
   scripts/generate-bosh-lite-dev-manifest
-  CF_RELEASE_MANIFEST="${CF_RELEASE_DIR}/bosh-lite/deployments/cf.yml"
-
-  version=`tail -2 releases/index.yml | grep " version: " | cut -f 2 -d "'"`
-  bosh -n upload release releases/cf-$version.yml
-  bosh -n -d "${CF_RELEASE_MANIFEST}" deploy
-
-  bosh -n cleanup --all
-
 popd > /dev/null
+
+pushd diego-release
+  USE_SQL='postgres' ./scripts/generate-bosh-lite-manifests
+popd
+
+mkdir generate-manifest-artifacts
+cp $CF_RELEASE_DIR/bosh-lite/deployments/cf.yml "generate-manifest-artifacts/manifest.yml"
+cp ../diego-release/bosh-lite/deployments/diego.yml "generate-manifest-artifacts/diego.yml"

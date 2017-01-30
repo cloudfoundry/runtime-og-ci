@@ -12,6 +12,71 @@ resources:
     branch: develop
     private_key: {{autoscaler_key}}
 
+# - name: app-autoscaler-release
+#   type: git
+#   source:
+#     uri: https://github.com/cloudfoundry-incubator/app-autoscaler-release
+#     branch: master
+
+- name: lite-stemcell
+  type: bosh-io-stemcell
+  source:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+
+- name: cf-release
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry/cf-release
+    branch: master
+
+- name: cf-release-bosh-release
+    type: bosh-io-release
+    tarball: true
+    source:
+      repository: cloudfoundry/cf-release
+
+- name: diego-release
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry/diego-release
+    branch: master
+
+- name: diego-bosh-release
+    type: bosh-io-release
+    tarball: true
+    source:
+      repository: cloudfoundry/diego-release
+
+- name: garden-runc-bosh-release
+  type: bosh-io-release
+  tarball: true
+  source:
+    repository: cloudfoundry/garden-runc-release
+
+- name: cf-release-cf-deployment
+  type: bosh-deployment
+  source:
+    target: https://{{bosh-lite-ip}}:25555
+    username: {{bosh-username}}
+    password: {{bosh=password}}
+    deployment: cf-warden
+    ignore_ssl: true
+
+- name: cf-release-diego-deployment
+  type: bosh-deployment
+  source:
+    target: https://{{bosh-lite-ip}}:25555
+    username: {{bosh-username}}
+    password: {{bosh=password}}
+    deployment: cf-warden-diego
+    ignore_ssl: true
+
+- name: cflinuxfs2-rootfs-bosh-release
+    type: bosh-io-release
+    tarball: true
+    source:
+      repository: cloudfoundry/cflinuxfs2-rootfs-release
+
 - name: tracker
   type: tracker
   source:
@@ -33,6 +98,7 @@ jobs:
     params:
       repos:
         - app-autoscaler
+
 - name: integration-tests
   max_in_flight: 1
   plan:
@@ -43,3 +109,49 @@ jobs:
     - get: runtime-og-ci
   - task: integration
     file: runtime-og-ci/autoscaler/tasks/integration-tests.yml
+
+- name: deploy
+  serial: true
+  serial_groups:
+  - bosh-app-autoscaler
+  plan:
+  - aggregate:
+    - get: cf-release
+      params:
+        submodules: none
+      trigger: true
+    - get: lite-stemcell
+      trigger: true
+    - get: cf-release-bosh-release
+      trigger: true
+    - get: diego-bosh-release
+      trigger: true
+    - get: cflinuxfs2-rootfs-bosh-release
+      trigger: true
+    - get: garden-runc-bosh-release
+    - get: diego-release
+      params:
+        submodules: none
+    - get: runtime-og-ci
+  - task: generate-manifests
+    file: runtime-og-ci/autoscaler/tasks/generate-manifests.yml
+    params:
+      BOSH_TARGET: {{bosh-lite-ip}}
+      BOSH_USERNAME: {{bosh-username}}
+      BOSH_PASSWORD: {{bosh-password}}
+  - put: cf-release-cf-deployment
+    params:
+      cleanup: true
+      manifest: generate-manifest-artifacts/manifest.yml
+      stemcells: [lite-stemcell/*.tgz]
+      releases:
+      - cf-release-bosh-release/release.tgz
+  - put: cf-release-diego-deployment
+    params:
+      cleanup: true
+      manifest: generate-manifest-artifacts/diego.yml
+      stemcells: [lite-stemcell/*.tgz]
+      releases:
+      - diego-bosh-release/release.tgz
+      - cflinuxfs2-rootfs-bosh-release/release.tgz
+      - garden-runc-bosh-release/release.tgz
