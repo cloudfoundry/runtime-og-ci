@@ -7,8 +7,7 @@ image_resource:
 
 inputs:
 - name: runtime-og-ci
-- name: app-autoscaler
-- name: autoscaler-output
+- name: app-autoscaler-release
 
 run:
   path: runtime-og-ci/autoscaler/scripts/autoscaler-acceptance.sh

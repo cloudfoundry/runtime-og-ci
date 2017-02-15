@@ -200,3 +200,19 @@ jobs:
           bosh upload release
           bosh -n deploy
           bosh cleanup --all
+
+- name: acceptance
+  serial_groups:
+  - bosh-app-autoscaler
+  plan:
+  - aggregate:
+    - get: app-autoscaler-release
+      trigger: true
+      passed: [deploy-autoscaler]
+      params:
+        paths: [src/acceptance]
+  - task: run-acceptance
+    file: runtime-og-ci/app-autoscaler/tasks/autoscaler-acceptance.yml
+    privileged: true
+    params:
+      BOSH_TARGET: {{bosh-lite-ip}}
