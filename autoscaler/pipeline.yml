@@ -12,11 +12,11 @@ resources:
     branch: develop
     private_key: {{autoscaler_key}}
 
-# - name: app-autoscaler-release
-#   type: git
-#   source:
-#     uri: https://github.com/cloudfoundry-incubator/app-autoscaler-release
-#     branch: master
+- name: app-autoscaler-release
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry-incubator/app-autoscaler-release
+    branch: master
 
 - name: lite-stemcell
   type: bosh-io-stemcell
@@ -111,7 +111,6 @@ jobs:
     file: runtime-og-ci/autoscaler/tasks/integration-tests.yml
 
 - name: deploy
-  serial: true
   serial_groups:
   - bosh-app-autoscaler
   plan:
@@ -155,3 +154,49 @@ jobs:
       - diego-bosh-release/release.tgz
       - cflinuxfs2-rootfs-bosh-release/release.tgz
       - garden-runc-bosh-release/release.tgz
+
+- name: deploy-autoscaler
+  serial_groups:
+  - bosh-app-autoscaler
+  plan:
+  - aggregate:
+    - get: app-autoscaler-release
+      trigger: true
+  - task: deploy
+    params:
+      BOSH_TARGET: {{bosh-lite-ip}}
+      BOSH_USERNAME: {{bosh-username}}
+      BOSH_PASSWORD: {{bosh-password}}
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: runtimeog/ci_image, tag: latest}
+      inputs:
+      - name: app-autoscaler-release
+      run:
+        path: bash
+        args:
+        - -c
+        - |
+          #!/bin/bash
+          set -e
+
+          wget https://github.com/cloudfoundry-incubator/spiff/releases/download/v1.0.7/spiff_linux_amd64
+          mkdir bin
+          mv spiff_linux_amd64 bin/spiff
+          chmod 755 bin/spiff
+
+          export PATH=$PWD/bin:$PATH
+
+          cd app-autoscaler-release
+          bosh -n target $BOSH_TARGET lite
+          bosh login $BOSH_USERNAME $BOSH_PASSWORD
+
+          bosh download manifest cf-warden ../cf.yml
+          ./scripts/update
+          ./scripts/generate-bosh-lite-manifest -c ../cf.yml -i ./example/cloud-config.yml -p ./example/property-overrides.yml
+          bosh create release --name app-autoscaler
+          bosh upload release
+          bosh -n deploy
+          bosh cleanup --all
