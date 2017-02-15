@@ -22,7 +22,7 @@ cf delete-service-broker -f CF-AutoScaler
 set -e
 
 cf create-service-broker CF-AutoScaler username password http://servicebroker-0.node.cf.internal:6101
-cf enable-service-access CF-AutoScaler
+cf enable-service-access autoscaler
 
 pushd app-autoscaler/src/acceptance
 cat > acceptance_config.json <<EOF
