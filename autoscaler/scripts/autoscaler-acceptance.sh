@@ -21,7 +21,7 @@ set +e
 cf delete-service-broker -f CF-AutoScaler
 set -e
 
-cf create-service-broker CF-AutoScaler admin admin https://autoscalingbroker.bosh-lite.com
+cf create-service-broker CF-AutoScaler username password http://servicebroker-0.node.cf.internal:6101
 cf enable-service-access CF-AutoScaler
 
 pushd app-autoscaler/src/acceptance
@@ -36,7 +36,7 @@ cat > acceptance_config.json <<EOF
 
   "service_name": "CF-AutoScaler",
   "service_plan": "autoscaler-free-plan",
-  "api_url": "https://autoscalingapi.bosh-lite.com",
+  "api_url": "http://servicebroker-0.node.cf.internal:6101",
 	"report_interval": 20
 }
 EOF
