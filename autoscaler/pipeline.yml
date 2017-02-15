@@ -211,8 +211,9 @@ jobs:
       passed: [deploy-autoscaler]
       params:
         paths: [src/acceptance]
+    - get: runtime-og-ci
   - task: run-acceptance
-    file: runtime-og-ci/app-autoscaler/tasks/autoscaler-acceptance.yml
+    file: runtime-og-ci/autoscaler/tasks/autoscaler-acceptance.yml
     privileged: true
     params:
       BOSH_TARGET: {{bosh-lite-ip}}

@@ -3,7 +3,7 @@ set -x -e
 
 apt-get -y update
 apt-get -y install dnsmasq
-echo -e "\n\naddress=/.bosh-lite.com/$BOSH_LITE_IP" >> /etc/dnsmasq.conf
+echo -e "\n\naddress=/.bosh-lite.com/$BOSH_TARGET" >> /etc/dnsmasq.conf
 sed -i '1 i\nameserver 127.0.0.1' /etc/resolv.conf
 echo 'starting dnsmasq'
 dnsmasq
