@@ -35,7 +35,7 @@ cat > acceptance_config.json <<EOF
   "skip_ssl_validation": true,
   "use_http": false,
 
-  "service_name": "CF-AutoScaler",
+  "service_name": "autoscaler",
   "service_plan": "autoscaler-free-plan",
   "api_url": "http://servicebroker-0.node.cf.internal:6101",
 	"report_interval": 20
