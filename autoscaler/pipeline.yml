@@ -197,7 +197,7 @@ jobs:
           ./scripts/update
           ./scripts/generate-bosh-lite-manifest -c ../cf.yml -i ./example/cloud-config.yml -p ./example/property-overrides.yml
           bosh create release --name app-autoscaler
-          bosh upload release
+          bosh upload release --rebase
           bosh -n deploy
           bosh cleanup --all
 

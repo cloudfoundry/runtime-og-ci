@@ -21,7 +21,7 @@ set +e
 cf delete-service-broker -f CF-AutoScaler
 set -e
 
-cf create-service-broker CF-AutoScaler username password http://servicebroker-0.node.cf.internal:6101
+cf create-service-broker CF-AutoScaler username password https://servicebroker-0.node.cf.internal:6101
 cf enable-service-access autoscaler
 
 export GOPATH=$PWD/app-autoscaler-release
@@ -37,7 +37,7 @@ cat > acceptance_config.json <<EOF
 
   "service_name": "autoscaler",
   "service_plan": "autoscaler-free-plan",
-  "api_url": "http://servicebroker-0.node.cf.internal:6101",
+  "api_url": "https://servicebroker-0.node.cf.internal:6101",
 	"report_interval": 20
 }
 EOF
