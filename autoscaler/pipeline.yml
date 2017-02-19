@@ -77,12 +77,12 @@ resources:
   source:
     repository: cloudfoundry/cflinuxfs2-rootfs-release
 
-- name: tracker
-  type: tracker
-  source:
-    tracker_url: https://www.pivotaltracker.com
-    project_id: "1566795"
-    token: {{tracker_api_token}}
+# - name: tracker
+#   type: tracker
+#   source:
+#     tracker_url: https://www.pivotaltracker.com
+#     project_id: "1566795"
+#     token: {{tracker_api_token}}
 
 jobs:
 - name: unit-tests
@@ -94,10 +94,10 @@ jobs:
     - get: runtime-og-ci
   - task: unit
     file: runtime-og-ci/autoscaler/tasks/autoscaler-unit-tests.yml
-  - put: tracker
-    params:
-      repos:
-        - app-autoscaler
+  # - put: tracker
+  #   params:
+  #     repos:
+  #       - app-autoscaler
 
 - name: integration-tests
   max_in_flight: 1
