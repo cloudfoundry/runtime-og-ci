@@ -194,8 +194,9 @@ jobs:
           bosh login $BOSH_USERNAME $BOSH_PASSWORD
 
           bosh download manifest cf-warden ../cf.yml
+          bosh update cloud-config ./example/cloud-config.yml
           ./scripts/update
-          ./scripts/generate-bosh-lite-manifest -c ../cf.yml -i ./example/cloud-config.yml -p ./example/property-overrides.yml
+          ./scripts/generate-bosh-lite-manifest -c ../cf.yml -p ./example/property-overrides.yml
           bosh create release --name app-autoscaler
           bosh upload release --rebase
           bosh -n deploy
