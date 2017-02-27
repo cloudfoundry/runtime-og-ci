@@ -37,5 +37,9 @@ export GOPATH=$PWD
 export PATH=$GOPATH/bin:$PATH
 go install github.com/onsi/ginkgo/ginkgo
 
+curl -L -o ./consul-0.7.5.zip "https://releases.hashicorp.com/consul/0.7.5/consul_0.7.5_linux_amd64.zip"
+unzip ./consul-0.7.5.zip -d $GOPATH/bin
+rm ./consul-0.7.5.zip
+
 DBURL=postgres://postgres@localhost/autoscaler?sslmode=disable ginkgo -r -race -p -randomizeAllSpecs src/integration
 
