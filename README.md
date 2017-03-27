@@ -9,7 +9,7 @@ private configuration files for the `pipeline.yml` files as described below.
 -------------
 
 This directory contains the concourse `pipeline.yml` for the autoscaler [pipeline](https://runtime-og.ci.cf-app.com/pipelines/autoscaler)
-and all of the associated scripts. Tp use this manifest, you need to provide a private configuration file
+and all of the associated scripts. To use this manifest, you need to provide a private configuration file
 for all of the template parameters.
 
 NOTE: If you are recreating this pipeline, for personal use and do not have authority to update
